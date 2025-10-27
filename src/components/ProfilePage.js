@@ -76,17 +76,6 @@ const ProfilePage = () => {
             <FaUserCircle className="icon-header" />
             บัญชีของคุณ
             </h1>
-            <motion.button 
-            className="logout-button" 
-            onClick={() => {
-                logout();
-                navigate('/login');
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            >
-            ออกจากระบบ <FaSignOutAlt />
-            </motion.button>
         </header>
         
         <motion.section 
