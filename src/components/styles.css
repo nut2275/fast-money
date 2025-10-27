@@ -1,0 +1,1451 @@
+/* card-icon */
+/* loan-history-section */
+/* --- Global Reset and Variables --- */
+:root {
+  --color-primary: #007bff; /* Blue */
+  --color-secondary: #28a745; /* Green - Deposit/Success */
+  --color-danger: #dc3545; /* Red - Withdrawal/Danger */
+  --color-text: #343a40;
+  --color-bg-light: #f8f9fa;
+  --color-white: #ffffff;
+  --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.05);
+  --shadow-deep: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+  /* Loan-specific colors/gradients */
+  --loan-primary-bg: linear-gradient(135deg, #007bff 0%, #00aeff 100%); /* วงเงินกู้ */
+  --loan-secondary-bg: linear-gradient(135deg, #ffc107 0%, #ffdb58 100%); /* ชำระรายเดือน */
+  --loan-tertiary-bg: linear-gradient(135deg, #28a745 0%, #2ed257 100%); /* ครบกำหนด */
+  --loan-info-bg: linear-gradient(135deg, #6c757d 0%, #8b929a 100%); /* เงินต้นคงเหลือ */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-bg-light);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+/* --- App Main Layout --- */
+.app-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ================================================= */
+/* ------------------- AUTH PAGES ------------------ */
+/* ================================================= */
+
+.auth-container {
+  padding: 20px;
+  width: 100%;
+  max-width: 450px;
+}
+
+.auth-form {
+  background-color: var(--color-white);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-deep);
+  transition: all 0.3s ease-in-out;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.icon-title {
+  font-size: 0.8em;
+  margin-left: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  background-color: #e9ecef;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.input-group:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.input-icon {
+  padding: 12px;
+  color: var(--color-primary);
+  font-size: 1.1em;
+  background-color: #dee2e6;
+}
+
+.auth-form input {
+  flex-grow: 1;
+  border: none;
+  padding: 12px 15px;
+  font-size: 1em;
+  background-color: var(--color-white);
+  outline: none;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.auth-button.primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.auth-button.secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.auth-button.primary:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: var(--color-danger);
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.success-message {
+  color: var(--color-secondary);
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.form-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: var(--color-text);
+}
+
+.form-link span {
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ================================================= */
+/* ------------------- PROFILE PAGE ------------------ */
+/* ================================================= */
+
+.profile-container {
+  max-width: 1000px;
+  width: 95%;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: var(--color-white);
+  border-radius: 15px;
+  box-shadow: var(--shadow-deep);
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.profile-title {
+  color: var(--color-primary);
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.icon-header {
+  margin-right: 10px;
+}
+
+.logout-button {
+  padding: 10px 15px;
+  background-color: var(--color-danger);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+/* --- Balance Card --- */
+.balance-card {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00aeff 100%);
+  color: var(--color-white);
+  padding: 30px;
+  border-radius: 12px;
+  margin-bottom: 20px; 
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+}
+
+.balance-icon {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.balance-label {
+  font-size: 1.2em;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.balance-value {
+  font-size: 3.5em;
+  font-weight: 800;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.user-info-text {
+    margin-top: 10px;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+/* --- Quick Actions --- */
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.action-button {
+    flex-grow: 1;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.deposit-action {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+}
+
+.withdraw-action {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+}
+
+.loan-action {
+    background-color: #ffc107; /* Yellow Accent */
+    color: var(--color-text);
+}
+
+/* --- Info Grid --- */
+.profile-info-grid {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: var(--color-primary);
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  border-left: 5px solid var(--color-secondary);
+  padding-left: 10px;
+  font-weight: 700;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-weight: 600;
+  color: var(--color-secondary);
+  flex-basis: 30%;
+}
+
+.info-value {
+  text-align: right;
+  flex-basis: 65%;
+  font-weight: 500;
+}
+
+/* --- Transaction History --- */
+.transaction-history {
+  margin-top: 30px;
+}
+
+.table-container {
+  overflow-x: auto; 
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  box-shadow: var(--shadow-light);
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+.transaction-table th,
+.transaction-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+  text-align: left;
+}
+
+.transaction-table th {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.transaction-table tbody tr:hover {
+  background-color: #eef7ff;
+}
+
+.transaction-table td:nth-child(4),
+.transaction-table td:nth-child(5) {
+  text-align: right;
+  font-weight: 500;
+}
+
+.amount-cell {
+  font-weight: bold !important;
+}
+
+/* Transaction Types */
+.transaction-deposit {
+  color: var(--color-secondary);
+}
+.transaction-withdrawal {
+  color: var(--color-danger);
+}
+
+.transaction-icon {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.transaction-icon.deposit {
+    color: var(--color-secondary);
+}
+.transaction-icon.withdrawal {
+    color: var(--color-danger);
+}
+
+/* ================================================= */
+/* --- TRANSACTION PAGES (Deposit/Withdrawal) --- */
+/* ================================================= */
+
+.transaction-container {
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.transaction-form {
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-form h2 {
+    text-align: center;
+    color: var(--color-text);
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.current-balance-display {
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 600;
+    box-shadow: var(--shadow-light);
+}
+
+.deposit-color {
+    background-color: #e6ffed; 
+    color: var(--color-secondary); 
+    border: 1px solid var(--color-secondary);
+}
+
+.withdrawal-color {
+    background-color: #ffe6e6; 
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.transaction-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 15px;
+}
+
+.deposit-btn {
+    background-color: var(--color-secondary); 
+    color: var(--color-white);
+}
+
+.withdrawal-btn {
+    background-color: var(--color-danger); 
+    color: var(--color-white);
+}
+
+.status-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* ================================================= */
+/* --- LOAN DETAIL STYLES (ปรับปรุงใหม่เพื่อความสวยงาม) --- */
+/* ================================================= */
+
+.loan-detail-container {
+    max-width: 1200px; 
+    width: 95%;
+    margin: 40px auto;
+    padding: 40px; 
+    background-color: var(--color-white);
+    border-radius: 18px; 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); 
+}
+
+.loan-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px; 
+    padding-bottom: 20px;
+    border-bottom: 3px solid #dee2e6; /* เส้นแบ่งสีอ่อนลง */
+}
+
+.loan-title {
+    color: #212529; 
+    font-size: 2.8em; 
+    font-weight: 800; 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.loan-id {
+    font-size: 0.6em; 
+    color: var(--color-primary);
+    background-color: #e9f5ff; 
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.loan-status {
+    padding: 10px 18px; 
+    border-radius: 20px; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1em;
+    box-shadow: var(--shadow-light); 
+}
+
+.status-active {
+    background-color: #e6ffed; 
+    color: #1f7b3a; 
+    border: 1px solid #1f7b3a;
+}
+.status-active .status-icon {
+    color: #1f7b3a;
+}
+
+.status-warning {
+    background-color: #fff8e6; 
+    color: #cc9900; 
+    border: 1px solid #cc9900;
+}
+.status-warning .status-icon {
+    color: #cc9900;
+}
+
+/* --- Loan Summary Cards (ปรับปรุงใหม่) --- */
+.loan-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 25px; 
+    margin-bottom: 40px;
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    border-radius: 15px;
+    color: var(--color-white);
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Card Specific Colors (ใช้ Gradient) */
+.summary-card.primary { 
+    background: var(--loan-primary-bg); 
+}
+.summary-card.secondary { 
+    background: var(--loan-secondary-bg); 
+    color: var(--color-text); /* สีข้อความดำสำหรับพื้นหลังสว่าง */
+} 
+.summary-card.tertiary { 
+    background: var(--loan-tertiary-bg); 
+}
+.summary-card.info { 
+    background: var(--loan-info-bg);
+}
+
+.summary-card .card-icon {
+    font-size: 3em;
+    /* padding: 1rem; */
+    margin-bottom: 15px;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
+}
+
+.summary-card.secondary .card-icon {
+    color: #a06e00; /* สีไอคอนเข้มขึ้นสำหรับพื้นหลังส้ม */
+}
+
+.summary-card .card-label {
+    font-size: 1.1em;
+    opacity: 0.9;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.summary-card .card-value {
+    font-size: 2.2em; 
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+.summary-card.secondary .card-value {
+    text-shadow: none; /* ลบเงาสำหรับพื้นหลังสว่าง */
+}
+
+/* --- Loan Details Grid (ปรับปรุงใหม่) --- */
+.loan-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    gap: 30px; 
+    padding: 30px;
+    background-color: #f8fafd; 
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-light);
+}
+
+.loan-info-grid .section-title {
+    grid-column: 1 / -1; 
+    color: #34495e; 
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--color-primary); 
+    padding-left: 15px;
+    font-weight: 700;
+}
+
+.loan-info-grid .info-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e6eb; 
+    gap: 15px; 
+}
+.loan-info-grid .info-item:last-child {
+    border-bottom: none;
+}
+
+.loan-info-grid .info-icon {
+    font-size: 1.4em;
+    color: var(--color-primary); 
+}
+
+.loan-info-grid .info-label {
+    font-weight: 600;
+    color: #495057; 
+    flex-basis: 40%;
+}
+
+.loan-info-grid .info-value {
+    text-align: right;
+    flex-grow: 1; 
+    font-weight: 500;
+    color: #212529;
+}
+
+/* --- Loan History Table --- */
+/* --- Loan History Table (ปรับปรุงใหม่ทั้งหมด) --- */
+
+.loan-history-section .section-title {
+    /* ใช้สไตล์เดียวกับ title อื่น ๆ */
+    color: #34495e;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--color-secondary); /* สีเขียว */
+    padding-left: 15px;
+    font-weight: 700;
+}
+
+.loan-table .table-container {
+    overflow-x: auto;
+    /* ลบ border และเพิ่มเงาที่นุ่มนวลขึ้น */
+    border: 1px solid #e9ecef; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+    border-radius: 12px;
+}
+
+.loan-table .payment-history-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    border-radius: 12px;
+    overflow: hidden; 
+}
+
+.loan-table .payment-history-table th,
+.loan-table .payment-history-table td {
+    padding: 15px; /* เพิ่ม padding */
+    border: none; /* ลบเส้นแบ่งแนวตั้ง */
+    border-bottom: 1px solid #f0f2f5; /* เส้นแบ่งแนวนอนสีอ่อน */
+    text-align: center; /* จัดขวาตามค่าเงิน */
+    font-size: 1em;
+}
+
+.loan-table .payment-history-table th {
+    background-color: #34495e; /* สีน้ำเงินเข้ม */
+    color: var(--color-white);
+    font-weight: 700;
+    text-align: l; /* จัดกลางหัวตาราง */
+    border-bottom: 3px solid #6c757d; /* เส้นใต้ที่หนาขึ้น */
+}
+
+/* จัดหัวตารางให้ตรงกับข้อมูล (ถ้าจำเป็น) */
+.loan-table .payment-history-table th:first-child { 
+  text-align: left; width: 30%; 
+} 
+.loan-table .payment-history-table th:last-child { 
+  text-align: center; 
+} 
+
+/* สลับสีพื้นหลังแถวเพื่อให้อ่านง่ายขึ้น (Zebra Striping) */
+.loan-table .payment-history-table tbody tr:nth-child(odd) {
+    background-color: var(--color-white);
+}
+.loan-table .payment-history-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+/* Hover Effect เพื่อบ่งชี้การโต้ตอบ */
+.loan-table .payment-history-table tbody tr:hover {
+    background-color: #e6f7ff; /* สีฟ้าอ่อนเมื่อเมาส์ชี้ */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.1);
+    cursor: default;
+}
+
+/* จัดตำแหน่งข้อความในคอลัมน์แรก (วันที่) */
+.loan-table .payment-history-table td:first-child {
+    font-weight: 600;
+    color: #495057;
+    text-align: left;
+}
+
+/* จัดตำแหน่งข้อความในคอลัมน์ค่าเงิน */
+.loan-table .payment-history-table td:nth-child(2), 
+.loan-table .payment-history-table td:nth-child(3) {
+    font-family: monospace, sans-serif; /* ใช้ monospace เพื่อให้ตัวเลขเรียงกันสวยงาม */
+    font-weight: 600;
+    
+}
+/* .loan-history-section .section-title {
+    color: #34495e;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--color-secondary);
+    padding-left: 15px;
+    font-weight: 700;
+}
+
+.loan-table .table-container {
+    border: none; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); 
+    border-radius: 12px;
+}
+
+.loan-table .payment-history-table {
+    min-width: 600px;
+    border-radius: 12px;
+    overflow: hidden; 
+}
+
+.loan-table .payment-history-table th {
+    background-color: #34495e; 
+    color: var(--color-white);
+} */
+
+/* ================================================= */
+/* ------------------- RESPONSIVE -------------------- */
+/* ================================================= */
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px 10px;
+    margin: 20px auto;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .profile-title {
+    font-size: 1.7em;
+  }
+
+  .balance-value {
+    font-size: 3em;
+  }
+  
+  /* Quick Actions Responsive */
+  .quick-actions {
+      flex-direction: column;
+      gap: 10px;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 0;
+  }
+
+  .info-label {
+    flex-basis: 100%;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+  }
+
+  .info-value {
+    flex-basis: 100%;
+    text-align: left;
+    font-size: 1em;
+  }
+
+  .transaction-table th,
+  .transaction-table td {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .auth-form {
+    padding: 30px 20px;
+  }
+  
+  /* Loan Detail Responsive */
+  .loan-detail-container {
+      padding: 20px;
+  }
+  .loan-title {
+      font-size: 2em;
+  }
+  .loan-summary-cards {
+    grid-template-columns: 1fr; /* เปลี่ยนเป็น 1 คอลัมน์ในจอเล็ก */
+  }
+  .loan-info-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .transaction-container {
+      max-width: 100%;
+      margin: 20px;
+  }
+  .current-balance-display {
+      font-size: 1.1em;
+      padding: 10px;
+  }
+}
+
+
+
+
+
+
+/* ================================================= */
+/* --- LOAN APPLICATION FORM (New Styles) --- */
+/* ================================================= */
+
+.loan-application-container {
+    padding: 20px;
+    width: 100%;
+    max-width: 700px; /* กว้างกว่าหน้า Login เล็กน้อย */
+}
+
+.loan-application-card {
+    background-color: var(--color-white);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.loan-form-header {
+    text-align: center;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* --- Stepper (ตัวบอกขั้นตอน) --- */
+.loan-stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding: 0 10%;
+    position: relative;
+}
+
+.loan-stepper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background-color: #e0e0e0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: var(--color-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    z-index: 2;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.step-indicator.active {
+    background-color: var(--color-primary);
+    box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.step-indicator.complete {
+    background-color: var(--color-secondary);
+    font-size: 1.2em;
+}
+
+/* --- Step Content --- */
+.step-content {
+    padding: 20px 0;
+    min-height: 180px; /* กำหนดความสูงขั้นต่ำเพื่อลดการกระโดด */
+}
+
+.step-title {
+    font-size: 1.5em;
+    color: #495057;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.loan-input label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--color-text);
+    font-size: 0.95em;
+}
+
+.loan-input input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.loan-input input:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+/* --- Summary --- */
+.summary-box {
+    background-color: #f8fafd;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.summary-box h4 {
+    color: var(--color-primary);
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+.summary-label {
+    font-weight: 500;
+}
+
+.summary-value {
+    font-weight: bold;
+    color: #212529;
+}
+
+.agreement-text {
+    font-size: 0.85em;
+    color: #6c757d;
+    text-align: center;
+}
+
+/* --- Navigation & Buttons --- */
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.nav-button {
+    flex-grow: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.back-button {
+    background-color: #6c757d;
+    color: var(--color-white);
+}
+
+.next-button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.submit-button {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    width: 100%;
+}
+
+.nav-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Status Message for Forms */
+.status-message-form {
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.status-message-form.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-message-form.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 576px) {
+    .loan-form-header {
+        font-size: 1.6em;
+    }
+    .form-navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .back-button, .next-button, .submit-button {
+        width: 100%;
+    }
+    .loan-stepper {
+        padding: 0 5%;
+    }
+    .step-indicator {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9em;
+    }
+}
+
+
+/* ================================================= */
+/* --- LOAN APPLICATION STYLES (เพิ่มเติม) --- */
+/* ================================================= */
+
+.emi-result-card {
+    background-color: #f0f8ff; /* Light blue background */
+    border: 1px solid #cceeff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.emi-result-card.active {
+    background-color: #e6f7ff;
+    border-color: var(--color-primary);
+}
+
+.emi-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.emi-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: var(--color-primary); /* สีน้ำเงินเข้ม */
+    margin-bottom: 5px;
+}
+
+.emi-rate {
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.emi-placeholder {
+    color: #999;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+/* ปรับปรุง Summary Item สำหรับยอดชำระ */
+.payment-summary {
+    background-color: #fff9e6; /* สีเหลืองอ่อน */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.payment-value {
+    color: var(--color-primary);
+    font-size: 1.2em;
+}
+
+.summary-icon {
+    color: var(--color-primary);
+    margin-right: 5px;
+}
+
+
+
+
+
+
+/* ================================================= */
+/* ------------------- NAVIGATION BAR ------------------ */
+/* ================================================= */
+
+.main-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px; /* เพิ่มความสูง */
+    background: rgba(255, 255, 255, 0.7); /* Glassmorphism effect */
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* เงาที่ดูดีขึ้น */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px; /* เพิ่ม padding */
+    z-index: 1000;
+    font-family: 'Poppins', sans-serif; /* ใช้ Poppins หรือ Font อื่นที่สวยงาม */
+}
+
+.navbar-logo a {
+    font-size: 1.8em; /* ขนาดใหญ่ขึ้น */
+    font-weight: 800;
+    color: var(--color-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.navbar-logo a:hover {
+    color: var(--color-primary-dark);
+}
+
+.logo-text {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-initials {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: var(--color-text-light);
+    opacity: 0.8;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 30px; /* ช่องว่างระหว่างลิงก์ */
+    height: 100%;
+}
+
+.nav-item-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0 15px;
+    height: 100%;
+    transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden; /* สำหรับ indicator animation */
+}
+
+.nav-link:hover {
+    color: var(--color-primary);
+}
+
+.nav-link.active {
+    color: var(--color-primary);
+}
+
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background-color: var(--color-primary);
+    border-radius: 4px 4px 0 0;
+}
+
+.nav-icon {
+    font-size: 1.2em; /* ขนาดไอคอนใหญ่ขึ้น */
+}
+
+.logout-nav-button {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+    padding: 10px 20px; /* ขนาดปุ่มใหญ่ขึ้น */
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.logout-nav-button:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* 💡 Responsive Adjustments */
+.desktop-only { display: flex; }
+.mobile-only { display: none; }
+
+/* ================================================= */
+/* ------------------- MOBILE MENU ------------------- */
+/* ================================================= */
+
+.hamburger-menu {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    color: var(--color-primary);
+    cursor: pointer;
+    z-index: 1001;
+    display: none; /* ซ่อนใน Desktop */
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-end; /* ให้เมนูโผล่มาจากด้านขวา */
+}
+
+.mobile-menu-drawer {
+    background: var(--color-white);
+    width: 70%; /* กว้าง 70% ของหน้าจอ */
+    max-width: 300px; /* แต่ไม่เกิน 300px */
+    height: 100%;
+    padding: 30px 20px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    position: relative;
+}
+
+.mobile-menu-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 15px;
+}
+
+.mobile-menu-header .logo-text {
+    font-size: 1.6em;
+}
+
+.close-menu-button {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.close-menu-button:hover {
+    color: var(--color-danger);
+}
+
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 12px 10px;
+    width: 100%;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+    background-color: var(--color-background-light);
+    color: var(--color-primary);
+}
+
+.mobile-nav-link.active {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.logout-mobile-button {
+    background-color: var(--color-danger);
+    color: var(--color-white);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    margin-top: auto; /* ดันปุ่มไปด้านล่าง */
+}
+.logout-mobile-button:hover {
+    background-color: #c82333;
+}
+
+
+/* ================================================= */
+/* --------------- GENERAL LAYOUT FIXES -------------- */
+/* ================================================= */
+
+.app-main {
+    /* เพิ่ม padding-top เพื่อให้เนื้อหาหลักไม่ทับ Navbar ที่ fixed */
+    padding-top: 100px; /* ควรมากกว่าความสูงของ Navbar เล็กน้อย */
+    min-height: 100vh;
+}
+.profile-container {
+    /* ปรับ margin top ให้เป็น 0 หรือค่าที่เหมาะสม ถ้า app-main มี padding-top แล้ว */
+    margin-top: 0; 
+    padding-top: 20px; /* เพิ่ม padding ด้านบนของ content แทน */
+}
+
+/* ================================================= */
+/* ------------------- MEDIA QUERIES ------------------- */
+/* ================================================= */
+
+@media (max-width: 992px) { /* สำหรับ Tablet และ Mobile */
+    .desktop-only { display: none; }
+    .mobile-only { display: flex; } /* แสดง Hamburger Menu */
+
+    .main-navbar {
+        padding: 0 20px;
+        height: 70px;
+    }
+    .navbar-logo a {
+        font-size: 1.6em;
+    }
+    .user-initials {
+        font-size: 0.6em;
+    }
+    .hamburger-menu {
+        display: flex; /* แสดงเฉพาะใน Mobile */
+    }
+}
+
+@media (max-width: 576px) { /* สำหรับ Mobile ขนาดเล็ก */
+    .main-navbar {
+        padding: 0 15px;
+        height: 60px;
+    }
+    .navbar-logo a {
+        font-size: 1.4em;
+    }
+    .user-initials {
+        display: none; /* ซ่อน username ในจอเล็กมาก */
+    }
+    .mobile-menu-drawer {
+        width: 85%; /* กว้างขึ้นสำหรับจอเล็กมาก */
+    }
+    .app-main {
+        padding-top: 80px;
+    }
+}
